@@ -1,4 +1,6 @@
+using KitMonitor.Server.Models;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 
 namespace KitMonitor
 {
@@ -11,6 +13,9 @@ namespace KitMonitor
 
 			builder.Services.AddControllersWithViews();
 			builder.Services.AddRazorPages();
+
+			builder.Services.AddDbContext<DatabaseContext>(options =>
+				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 			var app = builder.Build();
 
