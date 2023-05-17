@@ -1,10 +1,9 @@
-using KitMonitor.Server.Models;
-using Microsoft.AspNetCore.ResponseCompression;
+using KitMonitor.Server.Models.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace KitMonitor
+namespace KitMonitor.Server
 {
-	public class Program
+    public class Program
 	{
 		public static void Main(string[] args)
 		{

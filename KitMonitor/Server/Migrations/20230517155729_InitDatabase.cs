@@ -25,20 +25,7 @@ namespace KitMonitor.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Indicators",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Indicators", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Monitors",
+                name: "MonitorSystems",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -49,11 +36,31 @@ namespace KitMonitor.Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Monitors", x => x.Id);
+                    table.PrimaryKey("PK_MonitorSystems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Monitors_Companies_CompanyId",
+                        name: "FK_MonitorSystems_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Indicators",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdMonitorSystem = table.Column<long>(type: "bigint", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Indicators", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Indicators_MonitorSystems_IdMonitorSystem",
+                        column: x => x.IdMonitorSystem,
+                        principalTable: "MonitorSystems",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -85,8 +92,13 @@ namespace KitMonitor.Server.Migrations
                 column: "IndicatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Monitors_CompanyId",
-                table: "Monitors",
+                name: "IX_Indicators_IdMonitorSystem",
+                table: "Indicators",
+                column: "IdMonitorSystem");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MonitorSystems_CompanyId",
+                table: "MonitorSystems",
                 column: "CompanyId");
         }
 
@@ -97,10 +109,10 @@ namespace KitMonitor.Server.Migrations
                 name: "IndicatorLogs");
 
             migrationBuilder.DropTable(
-                name: "Monitors");
+                name: "Indicators");
 
             migrationBuilder.DropTable(
-                name: "Indicators");
+                name: "MonitorSystems");
 
             migrationBuilder.DropTable(
                 name: "Companies");
