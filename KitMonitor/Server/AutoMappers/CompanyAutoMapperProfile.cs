@@ -3,14 +3,13 @@ using KitMonitor.Server.Models.Database.Entities;
 using KitMonitor.Server.Models.Dto;
 using KitMonitor.Shared.Models.Entities;
 
-namespace KitMonitor.Server.AutoMappers
+namespace KitMonitor.Server.AutoMappers;
+
+public class CompanyAutoMapperProfile: Profile
 {
-	public class CompanyAutoMapperProfile: Profile
+	public CompanyAutoMapperProfile()
 	{
-		public CompanyAutoMapperProfile()
-		{
-			CreateMap<CompanyDto, Company>().ReverseMap();
-			CreateMap<ClientCompany, CompanyDto>().ReverseMap();
-		}
+		CreateMap<CompanyDto, Company>().ReverseMap();
+		CreateMap<ClientCompany, CompanyDto>().ReverseMap();
 	}
 }

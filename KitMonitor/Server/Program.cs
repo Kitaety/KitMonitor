@@ -1,11 +1,14 @@
+using FluentValidation;
+using KitMonitor.Server.ActionFilters.Company;
 using KitMonitor.Server.AutoMappers;
 using KitMonitor.Server.Middleware;
 using KitMonitor.Server.Models.Database;
-using KitMonitor.Server.Models.Dto;
 using KitMonitor.Server.Repositories;
 using KitMonitor.Server.Repositories.Interfaces;
 using KitMonitor.Server.Services;
 using KitMonitor.Server.Services.Interfaces;
+using KitMonitor.Server.Validators.Company;
+using KitMonitor.Shared.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace KitMonitor.Server
@@ -16,12 +19,14 @@ namespace KitMonitor.Server
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
-
 			builder.Services.AddControllersWithViews();
 			builder.Services.AddRazorPages();
 
 			builder.Services.AddDbContext<DatabaseContext>(options =>
 				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+			
+			builder.Services.AddScoped<IValidator<ClientCompany>, CreateCompanyValidator>();
 
 			builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 
@@ -30,6 +35,7 @@ namespace KitMonitor.Server
 			builder.Services.AddAutoMapper(typeof(CompanyAutoMapperProfile));
 
 			builder.Services.AddSwaggerGen();
+			builder.Services.AddScoped<CreateCompanyValidationFilter>();
 
 			var app = builder.Build();
 
