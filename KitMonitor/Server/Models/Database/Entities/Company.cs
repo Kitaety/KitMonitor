@@ -8,6 +8,7 @@ public class Company
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 	public long Id { get; set; }
+
 	[Required]
 	[MaxLength(255)]
 	public string Name { get; set; } = null!;

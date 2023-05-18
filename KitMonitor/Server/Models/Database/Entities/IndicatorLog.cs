@@ -8,10 +8,13 @@ public class IndicatorLog
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 	public long Id { get; set; }
+
 	[Required]
 	public long IndicatorId { get; set; }
+
 	[Required]
 	public DateTime TimeStamp { get; set; }
+
 	[Required]
 	[Column(TypeName = "decimal(15,4)")]
 	public decimal Value { get; set; }

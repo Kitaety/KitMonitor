@@ -1,9 +1,6 @@
-﻿using System;
+﻿using KitMonitor.Server.Models.Errors;
 using System.Net;
 using System.Text.Json;
-using KitMonitor.Server.Models.Database;
-using KitMonitor.Server.Models.Errors;
-using Microsoft.AspNetCore.Http;
 
 namespace KitMonitor.Server.Middleware;
 
@@ -28,7 +25,7 @@ public class GlobalExceptionHandlingMiddleware
 		{
 			await HandleValidationException(httpContext, ex);
 		}
-		catch(Exception ex)
+		catch (Exception ex)
 		{
 			await HandleException(httpContext, ex);
 		}
@@ -37,7 +34,7 @@ public class GlobalExceptionHandlingMiddleware
 	private async Task HandleValidationException(HttpContext httpContext, ValidationException exception)
 	{
 		_logger.LogError(exception.Message);
-		
+
 		var json = JsonSerializer.Serialize<IDictionary<string, string[]>>(exception.Errors);
 		await CreateErrorResponse(httpContext, json, HttpStatusCode.BadRequest);
 	}

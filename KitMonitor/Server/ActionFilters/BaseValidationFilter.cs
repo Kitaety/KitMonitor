@@ -23,7 +23,7 @@ public abstract class BaseValidationFilter<TRequest, TData> : IAsyncActionFilter
 	{
 		var request = context.ActionArguments.SingleOrDefault(p => p.Value is TRequest).Value;
 
-		if (request is not BaseRequest<TData> { Data: not null })
+		if (request is not BaseRequest<TData> or BaseRequest<TData> { Data: null })
 		{
 			return CreateRequestError(ErrorMessages.RequestInvalid);
 		}

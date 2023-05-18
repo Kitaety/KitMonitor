@@ -18,7 +18,7 @@ public class DatabaseTransactionMiddleware
 		try
 		{
 			await _next(httpContext);
-			
+
 			await databaseContext.SaveChangesAsync();
 			await transaction.CommitAsync();
 		}

@@ -16,7 +16,7 @@ public class CreateCompanyValidationFilter : BaseValidationFilter<CompanyRequest
 	protected override async Task<IDictionary<string, string[]>?> CustomValidation(CompanyRequest request)
 	{
 		var validationResult = await _companyValidator.ValidateAsync(request.Data);
-		
+
 		return !validationResult.IsValid ? validationResult.ToDictionary() : null;
 	}
 }

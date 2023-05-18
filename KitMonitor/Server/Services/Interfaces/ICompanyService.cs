@@ -2,6 +2,6 @@
 
 namespace KitMonitor.Server.Services.Interfaces;
 
-public interface ICompanyService: IBaseService<CompanyDto>
+public interface ICompanyService : IBaseService<CompanyDto>
 {
 }

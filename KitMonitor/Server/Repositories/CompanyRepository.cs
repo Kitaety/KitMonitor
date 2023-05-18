@@ -20,7 +20,7 @@ public class CompanyRepository : ICompanyRepository
 	public async Task<long> Create(CompanyDto newData)
 	{
 		var newCompany = _mapper.Map<Company>(newData);
-			
+
 		var createdEntry = await _databaseContext.Companies.AddAsync(newCompany);
 		await _databaseContext.SaveChangesAsync();
 

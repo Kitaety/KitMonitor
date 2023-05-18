@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KitMonitor.Server
 {
-    public class Program
+	public class Program
 	{
 		public static void Main(string[] args)
 		{
@@ -28,7 +28,6 @@ namespace KitMonitor.Server
 			builder.Services.AddDbContext<DatabaseContext>(options =>
 				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-			
 			builder.Services.AddScoped<IValidator<ClientCompany>, CreateCompanyValidator>();
 
 			builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();

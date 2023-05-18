@@ -3,4 +3,4 @@
 namespace KitMonitor.Shared.Models.Api.Requests;
 
 public class CompanyRequest : BaseRequest<ClientCompany>
-{}
+{ }

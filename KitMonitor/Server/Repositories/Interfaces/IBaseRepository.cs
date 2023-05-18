@@ -2,5 +2,5 @@
 
 public interface IBaseRepository<in TData>
 {
-    public Task<long> Create(TData newData);
+	public Task<long> Create(TData newData);
 }
