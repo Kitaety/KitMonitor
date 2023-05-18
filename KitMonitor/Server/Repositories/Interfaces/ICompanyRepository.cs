@@ -2,7 +2,6 @@
 
 namespace KitMonitor.Server.Repositories.Interfaces;
 
-public interface ICompanyRepository: IBaseRepository<CompanyDto>
+public interface ICompanyRepository : IBaseRepository<CompanyDto>
 {
-	
 }

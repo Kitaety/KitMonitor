@@ -2,7 +2,6 @@
 
 namespace KitMonitor.Server.Controllers.Interfaces;
 
-public interface ICompanyController: IBaseController<CompanyRequest>
+public interface ICompanyController : IBaseController<CompanyRequest>
 {
-	
 }

@@ -5,7 +5,7 @@ using KitMonitor.Shared.Models.Entities;
 
 namespace KitMonitor.Server.AutoMappers;
 
-public class CompanyAutoMapperProfile: Profile
+public class CompanyAutoMapperProfile : Profile
 {
 	public CompanyAutoMapperProfile()
 	{

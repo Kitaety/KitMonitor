@@ -1,7 +1,7 @@
 using FluentValidation;
 using KitMonitor.Server.ActionFilters.Company;
 using KitMonitor.Server.AutoMappers;
-using KitMonitor.Server.Middleware;
+using KitMonitor.Server.Extensions;
 using KitMonitor.Server.Models.Database;
 using KitMonitor.Server.Repositories;
 using KitMonitor.Server.Repositories.Interfaces;
@@ -61,6 +61,8 @@ namespace KitMonitor.Server
 
 			app.UseSwagger();
 			app.UseSwaggerUI();
+
+			app.UseGlobalExceptionHandling();
 			app.UseDatabaseTransaction();
 
 			app.MapRazorPages();

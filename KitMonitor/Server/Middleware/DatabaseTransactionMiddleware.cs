@@ -1,6 +1,7 @@
 ﻿using KitMonitor.Server.Models.Database;
 
 namespace KitMonitor.Server.Middleware;
+
 public class DatabaseTransactionMiddleware
 {
 	private readonly RequestDelegate _next;
@@ -26,13 +27,5 @@ public class DatabaseTransactionMiddleware
 			await transaction.RollbackAsync();
 			throw;
 		}
-	}
-}
-
-public static class DatabaseTransactionMiddlewareExtensions
-{
-	public static IApplicationBuilder UseDatabaseTransaction(this IApplicationBuilder app)
-	{
-		return app.UseMiddleware<DatabaseTransactionMiddleware>();
 	}
 }

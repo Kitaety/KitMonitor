@@ -6,7 +6,7 @@ using KitMonitor.Server.Repositories.Interfaces;
 
 namespace KitMonitor.Server.Repositories;
 
-public class CompanyRepository: ICompanyRepository
+public class CompanyRepository : ICompanyRepository
 {
 	private readonly DatabaseContext _databaseContext;
 	private readonly IMapper _mapper;

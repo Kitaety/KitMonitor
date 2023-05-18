@@ -1,6 +1,6 @@
 ﻿using KitMonitor.Server.Constants;
+using KitMonitor.Server.Models.Errors;
 using KitMonitor.Shared.Models.Api.Requests;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace KitMonitor.Server.ActionFilters;
@@ -13,11 +13,12 @@ public abstract class BaseValidationFilter<TRequest, TData> : IAsyncActionFilter
 	    var errors = await ValidationRequest(context);
 	    if (errors != null)
 	    {
-		    context.Result = new BadRequestObjectResult(errors);
-			return;
+		    throw new ValidationException(errors, ErrorMessages.GetCommonValidationMessage(typeof(TRequest).Name));
 	    }
+
 		await next();
 	}
+
     private async Task<IDictionary<string, string[]>?> ValidationRequest(ActionExecutingContext context)
     {
         var request = context.ActionArguments.SingleOrDefault(p => p.Value is TRequest).Value;
@@ -31,12 +32,13 @@ public abstract class BaseValidationFilter<TRequest, TData> : IAsyncActionFilter
         return await CustomValidation((TRequest)request);
     }
 
-    private Dictionary<string, string[]> CreateRequestError(string message)
+    private static Dictionary<string, string[]> CreateRequestError(string message)
     {
 		return new Dictionary<string, string[]>
 		{
 			{"", new []{message}}
 		};
 	}
+
     protected abstract Task<IDictionary<string, string[]>?> CustomValidation(TRequest request);
 }

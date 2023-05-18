@@ -4,7 +4,7 @@ using KitMonitor.Server.Services.Interfaces;
 
 namespace KitMonitor.Server.Services;
 
-public class CompanyService: ICompanyService
+public class CompanyService : ICompanyService
 {
 	private readonly ICompanyRepository _repository;
 

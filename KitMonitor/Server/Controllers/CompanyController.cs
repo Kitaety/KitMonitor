@@ -10,7 +10,7 @@ namespace KitMonitor.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CompanyController: ControllerBase, ICompanyController
+public class CompanyController : ControllerBase, ICompanyController
 {
 	private readonly ICompanyService _companyService;
 	private readonly IMapper _mapper;
