@@ -17,6 +17,9 @@ namespace KitMonitor.Server
 	{
 		public static void Main(string[] args)
 		{
+			//Disable localization of validation error messages
+			ValidatorOptions.Global.LanguageManager.Enabled = false;
+
 			var builder = WebApplication.CreateBuilder(args);
 
 			builder.Services.AddControllersWithViews();
