@@ -30,4 +30,14 @@ public class CompanyController : ControllerBase, ICompanyController
 
 		return Ok(result);
 	}
+
+	[HttpPut]
+	[ServiceFilter(typeof(UpdateCompanyValidationFilter))]
+	public async Task<IActionResult> Put(CompanyRequest request)
+	{
+		var newData = _mapper.Map<CompanyDto>(request.Data);
+		var result = await _companyService.Update(newData);
+
+		return Ok(result);
+	}
 }

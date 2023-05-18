@@ -1,4 +1,5 @@
 ﻿using KitMonitor.Server.Models.Errors;
+using System;
 using System.Net;
 using System.Text.Json;
 
@@ -21,37 +22,35 @@ public class GlobalExceptionHandlingMiddleware
 		{
 			await _next(httpContext);
 		}
-		catch (ValidationException ex)
+		catch (ValidationRequestDataException ex)
 		{
-			await HandleValidationException(httpContext, ex);
+			await HandleException(httpContext, ex.Message, ex.Errors, HttpStatusCode.BadRequest);
+		}
+		catch (BadHttpRequestException ex)
+		{
+			await HandleException(httpContext, ex.Message, ex.Message, HttpStatusCode.BadRequest);
 		}
 		catch (Exception ex)
 		{
-			await HandleException(httpContext, ex);
+			await HandleException(httpContext, ex.Message, ex.Message, HttpStatusCode.InternalServerError);
 		}
 	}
 
-	private async Task HandleValidationException(HttpContext httpContext, ValidationException exception)
+	private async Task HandleException(HttpContext httpContext, string logMessage, object responseObject, HttpStatusCode statusCode)
 	{
-		_logger.LogError(exception.Message);
+		_logger.LogError(logMessage);
 
-		var json = JsonSerializer.Serialize<IDictionary<string, string[]>>(exception.Errors);
-		await CreateErrorResponse(httpContext, json, HttpStatusCode.BadRequest);
+		await CreateErrorResponse(httpContext, responseObject, statusCode);
 	}
 
-	private async Task HandleException(HttpContext httpContext, Exception exception)
-	{
-		_logger.LogError(exception.Message);
-
-		await CreateErrorResponse(httpContext, exception.Message, HttpStatusCode.InternalServerError);
-	}
-
-	private async Task CreateErrorResponse(HttpContext httpContext, string value, HttpStatusCode statusCode)
+	private static async Task CreateErrorResponse(HttpContext httpContext, object value, HttpStatusCode statusCode)
 	{
 		HttpResponse response = httpContext.Response;
 		response.ContentType = "application/json";
 		response.StatusCode = (int)statusCode;
 
-		await response.WriteAsync(value);
+		var json = JsonSerializer.Serialize(value);
+
+		await response.WriteAsync(json);
 	}
 }

@@ -17,4 +17,16 @@ public class CompanyService : ICompanyService
 	{
 		return await _repository.Create(newData);
 	}
+
+	public async Task<long> Update(CompanyDto newData)
+	{
+		var existCompany = await _repository.GetById(newData.Id!.Value);
+
+		if (existCompany == null)
+		{
+			throw new KeyNotFoundException($"Company with Id {newData.Id} was not found");
+		}
+
+		return await _repository.Update(newData);
+	}
 }
