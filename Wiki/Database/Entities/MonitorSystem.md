@@ -3,12 +3,12 @@
 Contains information about the company
 
 
-| Property        | Type            | Allow Null | Description                                                     |
-| :-------------- | :-------------- | :--------- | :-------------------------------------------------------------- |
-| `Id`            | `bigint`        |            | Unique indentificator of Monitor System. Autoincriment          |
-| `Name`          | `nvarchar(255)` |            | Name of Monitor System. Max length 255                          |
-| `Status`        | `int`           |            | Status of Monitor System. Can be one of `0`. `1`, `2`           |
-| `CompanyId `    | `bigint`        |            | Indentificator of Company                                       |
+| Primary key | Property        | Type            | Allow Null | Description                                                     |
+| :---------- | :-------------- | :-------------- | :--------- | :-------------------------------------------------------------- |
+|      *      | `Id`            | `bigint`        |            | Unique indentificator of Monitor System. Autoincriment          |
+|             | `Name`          | `nvarchar(255)` |            | Name of Monitor System. Max length 255                          |
+|             | `Status`        | `int`           |            | Status of Monitor System. Can be one of `0`. `1`, `2`           |
+|             | `CompanyId `    | `bigint`        |            | Indentificator of Company                                       |
 
 ### Status
 
