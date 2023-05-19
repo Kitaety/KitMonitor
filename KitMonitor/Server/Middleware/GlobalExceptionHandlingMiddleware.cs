@@ -2,6 +2,7 @@
 using System;
 using System.Net;
 using System.Text.Json;
+using KitMonitor.Server.Constants;
 
 namespace KitMonitor.Server.Middleware;
 
@@ -46,7 +47,7 @@ public class GlobalExceptionHandlingMiddleware
 	private static async Task CreateErrorResponse(HttpContext httpContext, object value, HttpStatusCode statusCode)
 	{
 		HttpResponse response = httpContext.Response;
-		response.ContentType = "application/json";
+		response.ContentType = HttpConstants.JsonDataType;
 		response.StatusCode = (int)statusCode;
 
 		var json = JsonSerializer.Serialize(value);
