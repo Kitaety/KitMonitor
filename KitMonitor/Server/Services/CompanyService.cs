@@ -1,4 +1,5 @@
 ﻿using KitMonitor.Server.Models.Dto;
+using KitMonitor.Server.Models.Errors;
 using KitMonitor.Server.Repositories.Interfaces;
 using KitMonitor.Server.Services.Interfaces;
 
@@ -24,7 +25,7 @@ public class CompanyService : ICompanyService
 
 		if (existCompany == null)
 		{
-			throw new KeyNotFoundException($"Company with Id {newData.Id} was not found");
+			throw new ObjectNotFoundException($"Company with Id {newData.Id} was not found");
 		}
 
 		return await _repository.Update(newData);

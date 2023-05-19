@@ -3,6 +3,9 @@ using System;
 using System.Net;
 using System.Text.Json;
 using KitMonitor.Server.Constants;
+using KitMonitor.Shared.Models.Api.Response.Error;
+using KitMonitor.Shared.Models.Api.Response;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KitMonitor.Server.Middleware;
 
@@ -25,15 +28,22 @@ public class GlobalExceptionHandlingMiddleware
 		}
 		catch (ValidationRequestDataException ex)
 		{
-			await HandleException(httpContext, ex.Message, ex.Errors, HttpStatusCode.BadRequest);
+			await HandleException(httpContext, ex.Message, new ValidationErrorResponse(ex.Errors),
+				HttpStatusCode.BadRequest);
 		}
 		catch (BadHttpRequestException ex)
 		{
-			await HandleException(httpContext, ex.Message, ex.Message, HttpStatusCode.BadRequest);
+			await HandleException(httpContext, ex.Message, new BadRequestErrorResponse(ex.Message),
+				HttpStatusCode.BadRequest);
+		}
+		catch (ObjectNotFoundException ex)
+		{
+			await HandleException(httpContext, ex.Message, new ObjectNotFoundErrorResponse(ex.Message),
+				HttpStatusCode.BadRequest);
 		}
 		catch (Exception ex)
 		{
-			await HandleException(httpContext, ex.Message, ex.Message, HttpStatusCode.InternalServerError);
+			await HandleException(httpContext, ex.Message, new UnknownErrorResponse(ex.Message), HttpStatusCode.InternalServerError);
 		}
 	}
 
