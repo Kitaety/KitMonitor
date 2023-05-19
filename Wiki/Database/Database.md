@@ -1,4 +1,4 @@
 # Database
 
 1. [Chart of Database]()
-2. [Entities](./Entities.md]
+2. [Entities](./Entities/Entities.md)
