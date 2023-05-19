@@ -9,8 +9,8 @@ It is a client-server application designed to collect, process and display infor
 
 ## Acknowledgements
 
- - [Wiki]()
- - [API Referance]()
+ - [Wiki](./Wiki/Wiki.md)
+ - [API Referance](./Wiki/ApiReference/ApiReference.md)
 
 
 ## Environment Variables
