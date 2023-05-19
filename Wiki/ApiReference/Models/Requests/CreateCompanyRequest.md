@@ -6,7 +6,7 @@
 | `Data`    | `ClientCompany` | YES      | Company object with information     |
 
 
-### ClientCompany ([describtion](./Entities/ClientCompany.md))
+### ClientCompany ([describtion](../Entities/ClientCompany.md))
 
 | Property  | Type           | Required | Description                         |
 | :-------- | :------------- | :------- | :---------------------------------- |
