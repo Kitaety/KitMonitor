@@ -25,6 +25,10 @@ Model: [UpdateCompanyRequest](../../Models/Requests/UpdateCompanyRequest.md)
 
 ## Response
 
+### OK
+
+Code: 200
+
 Type: `application/json`
 
 ID of the updated company
@@ -34,3 +38,33 @@ ID of the updated company
 ```
 1
 ```
+
+***
+
+### Invalid Data of Reqquest 
+
+Code: 400
+
+Type: `application/json`
+
+Сontains a list of key-value pairs
+
+**Key** — field name (if the key is empty, then the message applies to the entire request)
+
+**Value** — list of error massages
+
+### JSON Example
+
+```
+{
+	"": [
+		"Invalid request data"
+	],
+	"Name" : [
+		"Name cannot be empty",
+		...
+	]
+}
+```
+
+***
