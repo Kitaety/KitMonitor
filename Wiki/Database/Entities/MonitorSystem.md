@@ -11,11 +11,12 @@ Contains information about the company
 | `CompanyId `    | `bigint`        |            | Indentificator of Company                                       |
 
 ### Status
-`0` - Disconnected
 
-`1` - Connected
-
-`2` - Error
+| Code | Name              |
+| :--- | :---------------- |
+| `0`  | Disconnected      |
+| `1`  | Connected         |
+| `2`  | Error             |
 
 ## Relationship
 
