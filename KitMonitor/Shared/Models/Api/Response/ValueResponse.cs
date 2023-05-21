@@ -1,6 +1,6 @@
 ﻿namespace KitMonitor.Shared.Models.Api.Response;
 
-public class BaseResponse<TData>
+public class ValueResponse<TData>
 {
 	public TData? Data { get; set; }
 }

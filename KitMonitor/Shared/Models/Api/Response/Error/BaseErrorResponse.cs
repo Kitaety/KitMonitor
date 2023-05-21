@@ -1,6 +1,6 @@
 ﻿namespace KitMonitor.Shared.Models.Api.Response.Error;
 
-public class BaseErrorResponse<TData> : BaseResponse<TData>
+public class BaseErrorResponse<TData> : ValueResponse<TData>
 {
 	public ResponseErrorType ErrorType { get; set; }
 
