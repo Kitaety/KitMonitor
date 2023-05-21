@@ -51,7 +51,7 @@ Code: 400
 
 Type: `application/json`
 
-Model: [ValidationErrorResponse](../Models/Responses/Error/ValidationErrorResponse.md)
+Model: [ValidationErrorResponse](../Models/Responses/ErrorResponse.md)
 
 Data: list of key-value pairs
 
