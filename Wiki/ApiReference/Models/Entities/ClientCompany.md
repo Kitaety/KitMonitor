@@ -1,6 +1,6 @@
 # ClientCompany
 
-It contains information about Company
+Contains information about Company
 
 | Property  | Type           | Description                         |
 | :-------- | :------------- | :---------------------------------- |
