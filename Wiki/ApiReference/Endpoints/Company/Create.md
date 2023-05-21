@@ -33,12 +33,16 @@ Code: 200
 
 Type: `application/json`
 
-ID of the created company
+Model: [ValueResponse](../Models/Responses/ValueResponse.md)
+
+Data: ID of the created company
 
 ### JSON Example
 
 ```
-1
+{
+  "Data" 1
+}
 ```
 
 ***
@@ -49,9 +53,9 @@ Code: 400
 
 Type: `application/json`
 
-Сontains a list of key-value pairs
+Model: [ValidationErrorResponse](../Models/Responses/Error/ValidationErrorResponse.md)
 
-
+Data: list of key-value pairs
 
 **Key** — field name (if the key is empty, then the message applies to the entire request)
 
@@ -61,13 +65,13 @@ Type: `application/json`
 
 ```
 {
-	"": [
-		"Invalid request data"
-	],
-	"Name" : [
-		"Name cannot be empty",
-		...
-	]
+  "": [
+    "Invalid request data"
+  ],
+  "Name" : [
+    "Name cannot be empty",
+    ...
+  ]
 }
 ```
 
