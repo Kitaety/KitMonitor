@@ -41,7 +41,7 @@ Data: ID of the created company
 
 ```
 {
-  "Data" 1
+  "data" 1
 }
 ```
 
