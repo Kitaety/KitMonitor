@@ -8,7 +8,7 @@ using KitMonitor.Server.Repositories.Interfaces;
 using KitMonitor.Server.Services;
 using KitMonitor.Server.Services.Interfaces;
 using KitMonitor.Server.Validators.Company;
-using KitMonitor.Shared.Models.Entities;
+using KitMonitor.Server.Validators.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace KitMonitor.Server
@@ -28,7 +28,9 @@ namespace KitMonitor.Server
 			builder.Services.AddDbContext<DatabaseContext>(options =>
 				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-			builder.Services.AddScoped<IValidator<ClientCompany>, CreateCompanyValidator>();
+			builder.Services.AddScoped<CreateCompanyValidator>();
+			builder.Services.AddScoped<UpdateCompanyValidator>();
+			builder.Services.AddScoped<ICompanyValidator, CompanyValidator>();
 
 			builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 
@@ -38,6 +40,7 @@ namespace KitMonitor.Server
 
 			builder.Services.AddSwaggerGen();
 			builder.Services.AddScoped<CreateCompanyValidationFilter>();
+			builder.Services.AddScoped<UpdateCompanyValidationFilter>();
 
 			var app = builder.Build();
 

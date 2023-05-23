@@ -1,4 +1,5 @@
-﻿using KitMonitor.Server.Constants;
+﻿using Azure.Core;
+using KitMonitor.Server.Constants;
 using KitMonitor.Server.Models.Errors;
 using KitMonitor.Shared.Models.Api.Requests;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -10,33 +11,30 @@ public abstract class BaseValidationFilter<TRequest, TData> : IAsyncActionFilter
 {
 	public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
 	{
-		var errors = await ValidationRequest(context);
+		var request = GetRequestFromContext(context);
+		ValidationRequest(request);
+
+		var errors = await CustomValidation(request!);
+
 		if (errors != null)
 		{
-			throw new ValidationException(errors, ErrorMessages.GetCommonValidationMessage(typeof(TRequest).Name));
+			throw new ValidationRequestDataException(errors, ErrorMessages.GetCommonValidationMessage(typeof(TRequest).Name));
 		}
 
 		await next();
 	}
 
-	private async Task<IDictionary<string, string[]>?> ValidationRequest(ActionExecutingContext context)
+	private static void ValidationRequest(TRequest? request)
 	{
-		var request = context.ActionArguments.SingleOrDefault(p => p.Value is TRequest).Value;
-
-		if (request is not BaseRequest<TData> or BaseRequest<TData> { Data: null })
+		if (request is BaseRequest<TData> { Data: null })
 		{
-			return CreateRequestError(ErrorMessages.RequestInvalid);
+			throw new BadHttpRequestException(ErrorMessages.RequestInvalid);
 		}
-
-		return await CustomValidation((TRequest)request);
 	}
 
-	private static Dictionary<string, string[]> CreateRequestError(string message)
+	private static TRequest? GetRequestFromContext(ActionExecutingContext context)
 	{
-		return new Dictionary<string, string[]>
-		{
-			{"", new []{message}}
-		};
+		return context.ActionArguments.SingleOrDefault(argument => argument.Value is TRequest).Value as TRequest;
 	}
 
 	protected abstract Task<IDictionary<string, string[]>?> CustomValidation(TRequest request);

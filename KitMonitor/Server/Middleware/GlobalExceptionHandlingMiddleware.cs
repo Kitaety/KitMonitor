@@ -1,6 +1,11 @@
 ﻿using KitMonitor.Server.Models.Errors;
+using System;
 using System.Net;
 using System.Text.Json;
+using KitMonitor.Server.Constants;
+using KitMonitor.Shared.Models.Api.Response.Error;
+using KitMonitor.Shared.Models.Api.Response;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KitMonitor.Server.Middleware;
 
@@ -21,37 +26,42 @@ public class GlobalExceptionHandlingMiddleware
 		{
 			await _next(httpContext);
 		}
-		catch (ValidationException ex)
+		catch (ValidationRequestDataException ex)
 		{
-			await HandleValidationException(httpContext, ex);
+			await HandleException(httpContext, ex.Message, new ValidationErrorResponse(ex.Errors),
+				HttpStatusCode.BadRequest);
+		}
+		catch (BadHttpRequestException ex)
+		{
+			await HandleException(httpContext, ex.Message, new BadRequestErrorResponse(ex.Message),
+				HttpStatusCode.BadRequest);
+		}
+		catch (ObjectNotFoundException ex)
+		{
+			await HandleException(httpContext, ex.Message, new ObjectNotFoundErrorResponse(ex.Message),
+				HttpStatusCode.BadRequest);
 		}
 		catch (Exception ex)
 		{
-			await HandleException(httpContext, ex);
+			await HandleException(httpContext, ex.Message, new UnknownErrorResponse(ex.Message), HttpStatusCode.InternalServerError);
 		}
 	}
 
-	private async Task HandleValidationException(HttpContext httpContext, ValidationException exception)
+	private async Task HandleException(HttpContext httpContext, string logMessage, object responseObject, HttpStatusCode statusCode)
 	{
-		_logger.LogError(exception.Message);
+		_logger.LogError(logMessage);
 
-		var json = JsonSerializer.Serialize<IDictionary<string, string[]>>(exception.Errors);
-		await CreateErrorResponse(httpContext, json, HttpStatusCode.BadRequest);
+		await CreateErrorResponse(httpContext, responseObject, statusCode);
 	}
 
-	private async Task HandleException(HttpContext httpContext, Exception exception)
-	{
-		_logger.LogError(exception.Message);
-
-		await CreateErrorResponse(httpContext, exception.Message, HttpStatusCode.InternalServerError);
-	}
-
-	private async Task CreateErrorResponse(HttpContext httpContext, string value, HttpStatusCode statusCode)
+	private static async Task CreateErrorResponse(HttpContext httpContext, object value, HttpStatusCode statusCode)
 	{
 		HttpResponse response = httpContext.Response;
-		response.ContentType = "application/json";
+		response.ContentType = HttpConstants.JsonDataType;
 		response.StatusCode = (int)statusCode;
 
-		await response.WriteAsync(value);
+		var json = JsonSerializer.Serialize(value);
+
+		await response.WriteAsync(json);
 	}
 }
